@@ -40,9 +40,14 @@ snippy-core --ref ref.gbk s1.fna s2.fna ...
 ```
 Discriminant Analysis of Principal Components (DAPC) analysis
 ```
-train_vcf_file <- "train_population_data.vcf"
+train_vcf_file <- "train_population_data.vcf" #The train list for source prediction was uploaded in the repository
 supplementary_vcf_file <- "HK_individuals.vcf" 
 train_vcf <- read.vcfR(train_vcf_file)
 supplementary_vcf <- read.vcfR(supplementary_vcf_file)
 train_genlight <- vcfR2genlight(train_vcf)
 predict_genlight <- vcfR2genlight(supplementary_vcf)
+dapc <- dapc(train_genlight, grp$grp)
+pred.sup <- predict.dapc(dapc, newdata=predict_genlight)
+predict_coords <- pred.sup$ind.scores
+```
+
