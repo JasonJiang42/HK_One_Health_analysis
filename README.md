@@ -34,3 +34,15 @@ snp-sites -c gubbins.filtered_polymorphic_sites.fasta > clean.core.aln
 iqtree -s clean.core.aln --boot-trees --wbtl -m GTR+I+G -B 1000 -nt 18
 ```
 ## Source prediction using DAPC ##
+Call the core SNPs   
+```
+snippy-core --ref ref.gbk s1.fna s2.fna ...   
+```
+Discriminant Analysis of Principal Components (DAPC) analysis
+```
+train_vcf_file <- "train_population_data.vcf"
+supplementary_vcf_file <- "HK_individuals.vcf" 
+train_vcf <- read.vcfR(train_vcf_file)
+supplementary_vcf <- read.vcfR(supplementary_vcf_file)
+train_genlight <- vcfR2genlight(train_vcf)
+predict_genlight <- vcfR2genlight(supplementary_vcf)
