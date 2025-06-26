@@ -25,3 +25,12 @@ poppunk --create-db --output EC_database --r-files list.txt --threads 8
 poppunk --fit-model lineages --ref-db EC --ranks 1,2,3
 poppunk_visualise --ref-db EC --cytoscape --network-file EC/EC_graph.gt
 ```
+## Phylogenetic analysis ##
+core genome alignment was generated using snippy (https://github.com/tseemann/snippy), and recombination sites were removed with Gubbins (https://github.com/nickjcroucher/gubbins). A maximum-likelihood phylogenetic tree was then constructed using IQ-TREE (http://www.iqtree.org/) based on clean core genome SNP alignments.
+```
+snippy --outdir mut1 --ref ref.gbk --ctgs mut1.fasta
+run_gubbins.py -p gubbins clean.full.aln
+snp-sites -c gubbins.filtered_polymorphic_sites.fasta > clean.core.aln
+iqtree -s clean.core.aln --boot-trees --wbtl -m GTR+I+G -B 1000 -nt 18
+```
+## Source prediction using DAPC ##
